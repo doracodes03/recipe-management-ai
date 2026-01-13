@@ -1,3 +1,5 @@
+<img width="513" height="836" alt="image" src="https://github.com/user-attachments/assets/2c2b91ca-00b5-49bd-b4e8-60daed01ee4b" />
+
 # Recipe Explorer — FastAPI + Flask UI 🍽️
 
 A small recipe manager with search, filters, a lightweight Flask UI, and AI-assisted recipe suggestions. This README explains features, configuration, step-by-step installation, and troubleshooting with helpful emojis. ✅
