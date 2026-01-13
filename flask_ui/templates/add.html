@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Recipe</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <header class="hero small">
+      <div class="container">
+        <h1>Add Recipe</h1>
+        <a class="btn" href="/">Back</a>
+      </div>
+    </header>
+
+    <main class="container form-card">
+      <form method="post">
+        <label>Name<input name="name" required></label>
+        <label>Ingredients<textarea name="ingredients" rows="4"></textarea></label>
+        <label>Instructions<textarea name="instructions" rows="6"></textarea></label>
+        <label>Cuisine<input name="cuisine"></label>
+        <label>Prep time (mins)<input name="prep_time" type="number"></label>
+        <label>Diet type
+          <select name="diet_type">
+            <option value="veg">veg</option>
+            <option value="non-veg">non-veg</option>
+            <option value="vegan">vegan</option>
+          </select>
+        </label>
+        <button type="submit">Add</button>
+      </form>
+    </main>
+
+  </body>
+</html>

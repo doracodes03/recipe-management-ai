@@ -1,0 +1,32 @@
+:root{
+  --bg:#0f1724;--card:#0b1220;--accent:#ff7b72;--muted:#9aa4b2;--glass: rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+body{margin:0;background:linear-gradient(180deg,#071124 0%, #0f1724 100%);color:#e6eef6}
+.container{max-width:1000px;margin:0 auto;padding:24px}
+.hero{padding:48px 0;text-align:center}
+.hero.small{padding:24px 0}
+.hero h1{margin:0;font-size:36px}
+.hero p{color:var(--muted);margin:8px 0 18px}
+.search-form{display:flex;gap:8px;justify-content:center;align-items:center}
+.search-form input[type="number"]{width:140px}
+.search-form input, .search-form select{padding:10px;border-radius:8px;border:0;background:var(--glass);color:inherit}
+.search-form button, .btn{background:var(--accent);border:0;color:#0b1220;padding:10px 14px;border-radius:8px;cursor:pointer;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column}
+.card-head{display:flex;gap:12px;align-items:flex-start}
+.card-image img{width:110px;height:80px;object-fit:cover;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
+.card-title{flex:1;display:flex;align-items:center;justify-content:space-between}
+.card h2{margin:0 0 6px}
+.meta{color:var(--muted);font-size:13px;margin:10px 0}
+.ingredients{color:var(--muted);font-size:14px}
+.form-card{background:var(--card);padding:20px;border-radius:12px}
+label{display:block;margin-bottom:12px}
+label input, label textarea, label select{width:100%;padding:10px;border-radius:8px;border:0;background:#061122;color:inherit}
+button{background:var(--accent);border:0;padding:10px 16px;border-radius:8px;color:#061122;cursor:pointer}
+.actions a.small{display:inline-block;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.03);color:inherit;text-decoration:none;margin-left:8px}
+.actions a.small.danger{background:rgba(255,80,80,0.12);color:#ffb4b4}
+.ai-grid{display:flex;gap:12px;flex-wrap:wrap}
+.ai-box{background:var(--glass);padding:12px;border-radius:10px;flex:1;min-width:220px}
+.ai-result pre{white-space:pre-wrap;background:#061122;padding:12px;border-radius:8px;color:var(--muted)}
+footer{padding:20px;text-align:center;color:var(--muted)}
