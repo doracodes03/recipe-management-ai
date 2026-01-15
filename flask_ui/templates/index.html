@@ -4,78 +4,90 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recipe Explorer</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
     <div class="container">
+
+      <!-- HEADER -->
       <header>
         <h1>Recipe Explorer</h1>
         <p class="muted">Search, filter and manage recipes (veg / non-veg / vegan)</p>
       </header>
 
-      <!-- Search & Filters -->
+      <!-- SEARCH & FILTER -->
       <section class="panel">
         <h2>Search Recipes</h2>
         <form method="get" action="/">
           <div class="row">
-            <input name="query" placeholder="Search by ingredient or keyword" value="{{ query or '' }}" />
+            <input
+              name="query"
+              placeholder="Search by ingredient or keyword"
+              value="{{ query or '' }}"
+            />
+
             <select name="diet_type">
               <option value="">All diets</option>
               <option value="veg" {% if diet_type=='veg' %}selected{% endif %}>Veg</option>
               <option value="non-veg" {% if diet_type=='non-veg' %}selected{% endif %}>Non-Veg</option>
               <option value="vegan" {% if diet_type=='vegan' %}selected{% endif %}>Vegan</option>
             </select>
-            <input name="max_prep_time" type="number" placeholder="Max prep time (mins)" value="{{ max_prep_time or '' }}" />
+
+            <input
+              name="max_prep_time"
+              type="number"
+              placeholder="Max prep time (mins)"
+              value="{{ max_prep_time or '' }}"
+            />
+
             <button type="submit">Search</button>
           </div>
         </form>
       </section>
 
-      <!-- Results -->
+      <!-- RESULTS -->
       <section class="panel">
         <h2>Results</h2>
+
         {% if recipes %}
         <div class="grid">
           {% for r in recipes %}
           <article class="card">
+
             <div class="card-head">
               <div class="card-image">
-                {% if r.name == 'Chicken Stir Fry' %}
-                <img src="https://natashaskitchen.com/wp-content/uploads/2018/08/Chicken-Stir-Fry-1-1.jpg" alt="{{ r.name }}">
-                {% elif r.name == 'Begun Bhaja' %}
-                <img src="https://www.cubesnjuliennes.com/wp-content/uploads/2018/10/Begun-Bhaja-recipe.jpg" alt="{{ r.name }}">
-                {% elif r.name == 'Lemon Garlic Salmon' %}
-                <img src="https://www.recipetineats.com/tachyon/2024/02/Lemon-garlic-salmon-tray-bake_1.jpg?resize=1200%2C1500&zoom=0.54" alt="{{ r.name }}">
-                {% elif r.name == 'Red Lentil Dahl' %}
-                <img src="https://media.istockphoto.com/id/1130228942/photo/indian-dal-traditional-indian-soup-lentils-indian-dhal-spicy-curry-in-bowl-spices-herbs.jpg?s=1024x1024&w=is&k=20&c=LkD48ZKNvdUcISgC7tl3Twzf1DscUS43gesQTxmu8Jk=" alt="{{ r.name }}">
-                {% elif r.name == 'Classic Margherita Pizza' %}
-                <img src="https://uk.ooni.com/cdn/shop/articles/20220211142645-margherita-9920_e41233d5-dcec-461c-b07e-03245f031dfe.jpg?v=1737105431&width=2048" alt="{{ r.name }}">
-                {% elif r.name == 'Rajma Chawal' %}
-                <img src="https://www.secondrecipe.com/wp-content/uploads/2017/08/rajma-chawal-1.jpg" alt="{{ r.name }}">
-                {% elif r.name == 'Mediterranean Quinoa Salad' %}
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxahtB7wkPT_6MewLJfKeFYufZS8hMth8p8A&s" alt="{{ r.name }}">
-                {% elif r.name == 'Pork Tacos' %}
-                <img src="https://www.simplejoy.com/wp-content/uploads/2022/09/pulled-pork-tacos.jpg" alt="{{ r.name }}">
-                {% elif r.name == 'Milk Tea' %}
-                <img src="https://www.theflavorbender.com/wp-content/uploads/2025/08/How-to-make-Tea-SQ.jpg" alt="{{ r.name }}">
-                {% else %}
-                <img src="/static/placeholder.png" alt="{{ r.name }}">
-                {% endif %}
+                <img
+                  src="{{ url_for('static', filename=r.image) }}"
+                  alt="{{ r.name }}"
+                >
               </div>
+
               <div class="card-title">
                 <h3>{{ r.name }}</h3>
                 <div class="actions">
                   <a class="small" href="/edit/{{ r.id }}">Edit</a>
-                  <a class="small danger" href="/delete/{{ r.id }}" onclick="return confirm('Delete this recipe?')">Delete</a>
+                  <a
+                    class="small danger"
+                    href="/delete/{{ r.id }}"
+                    onclick="return confirm('Delete this recipe?')"
+                  >Delete</a>
                 </div>
               </div>
             </div>
-            <p class="meta">Cuisine: {{ r.cuisine or '—' }} • Prep: {{ r.prep_time }} mins • Diet: {{ r.diet_type }}</p>
+
+            <p class="meta">
+              Cuisine: {{ r.cuisine or '—' }}
+              • Prep: {{ r.prep_time }} mins
+              • Diet: {{ r.diet_type }}
+            </p>
+
             <p><strong>Ingredients:</strong> {{ r.ingredients }}</p>
+
             <details>
               <summary>Instructions</summary>
               <p>{{ r.instructions }}</p>
             </details>
+
           </article>
           {% endfor %}
         </div>
@@ -84,7 +96,7 @@
         {% endif %}
       </section>
 
-      <!-- Add / Manage -->
+      <!-- ADD RECIPE -->
       <section class="panel">
         <h2>Add Recipe</h2>
         <form method="post" action="/add" class="form-grid">
@@ -93,33 +105,42 @@
           <textarea name="instructions" placeholder="Instructions"></textarea>
           <input name="cuisine" placeholder="Cuisine" />
           <input type="number" name="prep_time" placeholder="Prep time (mins)" />
+
           <select name="diet_type" required>
             <option value="veg">Veg</option>
             <option value="non-veg">Non-Veg</option>
             <option value="vegan">Vegan</option>
           </select>
+
           <div></div>
           <button type="submit">Add Recipe</button>
         </form>
       </section>
 
-      <!-- AI Assistant -->
+      <!-- AI ASSISTANT -->
       <section class="panel">
         <h2>AI Recipe Assistant</h2>
-        <p class="muted">Ask for suggestions, make a recipe healthier, or get simple step-by-step explanations.</p>
+        <p class="muted">
+          Ask for suggestions, make a recipe healthier, or get simple step-by-step explanations.
+        </p>
 
         <div class="ai-grid">
+
           <form method="post" action="/ai/suggest" class="ai-box">
-            <label>Suggest a recipe for:<input name="ai_query" placeholder="e.g. 'healthy dinner with quinoa'" /></label>
+            <label>
+              Suggest a recipe for:
+              <input name="ai_query" placeholder="e.g. healthy dinner with quinoa" />
+            </label>
             <button type="submit">Suggest</button>
           </form>
 
           <form method="post" action="/ai/make-healthier" class="ai-box">
-            <label>Make this recipe healthier:
+            <label>
+              Make this recipe healthier:
               <select name="ai_recipe_id">
                 <option value="">Select recipe</option>
                 {% for r in recipes %}
-                <option value="{{ r.id }}">{{ r.name }} (id: {{ r.id }})</option>
+                <option value="{{ r.id }}">{{ r.name }}</option>
                 {% endfor %}
               </select>
             </label>
@@ -127,16 +148,18 @@
           </form>
 
           <form method="post" action="/ai/explain" class="ai-box">
-            <label>Explain steps for:
+            <label>
+              Explain steps for:
               <select name="ai_recipe_id">
                 <option value="">Select recipe</option>
                 {% for r in recipes %}
-                <option value="{{ r.id }}">{{ r.name }} (id: {{ r.id }})</option>
+                <option value="{{ r.id }}">{{ r.name }}</option>
                 {% endfor %}
               </select>
             </label>
             <button type="submit">Explain Steps</button>
           </form>
+
         </div>
 
         {% if ai_result %}
@@ -148,8 +171,9 @@
       </section>
 
       <footer>
-        <p class="muted">FastAPI backend at <code>{{ request.host }}</code></p>
+        <p class="muted">FastAPI backend connected</p>
       </footer>
+
     </div>
   </body>
 </html>

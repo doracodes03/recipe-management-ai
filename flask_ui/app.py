@@ -1,6 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import requests
 import os
+IMAGE_MAP = {
+    "Chicken Stir Fry": "chicken_stir_fry.jpg",
+    "Begun Bhaja": "begun_bhaja.jpg",
+    "Red Lentil Dahl": "red_lentil_dahl.jpg",
+    "Classic Margherita Pizza": "margherita_pizza.jpg",
+    "Lemon Garlic Salmon": "lemon_garlic_salmon.jpg",
+    "Rajma Chawal": "rajma_chawal.jpg",
+    "Mediterranean Quinoa Salad": "quinoa_salad.jpg",
+    "Pork Tacos": "pork_tacos.jpg",
+    "Milk Tea": "milk_tea.jpg",
+}
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET", "dev-secret")
@@ -20,7 +31,6 @@ def fetch_recipes(params=None):
 
 @app.route("/", methods=["GET"])
 def index():
-    # Read search/filter params from querystring
     query = request.args.get("query")
     diet_type = request.args.get("diet_type")
     cuisine = request.args.get("cuisine")
@@ -38,7 +48,18 @@ def index():
 
     recipes = fetch_recipes(params)
 
-    return render_template("index.html", recipes=recipes, query=query, diet_type=diet_type, cuisine=cuisine, max_prep_time=max_prep_time)
+   
+    for r in recipes:
+        r["image"] = IMAGE_MAP.get(r["name"], "placeholder.png")
+
+    return render_template(
+        "index.html",
+        recipes=recipes,
+        query=query,
+        diet_type=diet_type,
+        cuisine=cuisine,
+        max_prep_time=max_prep_time
+    )
 
 
 @app.route("/add", methods=["POST"])

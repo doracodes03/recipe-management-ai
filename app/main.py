@@ -149,3 +149,15 @@ def ai_explain_steps(
 
     prompt = f"Explain this recipe step-by-step for beginners:\n{source}"
     return {"result": generate_recipe(prompt)}
+from .seed_data import SEED_RECIPES
+from .database import SessionLocal
+from . import models
+
+@app.on_event("startup")
+def seed_db():
+    db = SessionLocal()
+    if db.query(models.Recipe).count() == 0:
+        db.add_all(SEED_RECIPES)
+        db.commit()
+    db.close()
+
