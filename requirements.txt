@@ -3,4 +3,3 @@ uvicorn
 sqlalchemy
 python-dotenv
 requests
-mangum==0.17.0
