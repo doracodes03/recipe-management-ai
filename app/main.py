@@ -9,8 +9,12 @@ from .database import SessionLocal, engine
 from . import models, schemas, crud
 from .crud import extract_diet_from_query
 from .ai_agent import generate_recipe
+try:
+    models.Base.metadata.create_all(bind=engine)
+except Exception as e:
+    print("DB init skipped on serverless:", e)
 
-models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI(title="Recipe Management API")
 
